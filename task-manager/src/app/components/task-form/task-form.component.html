@@ -1,0 +1,59 @@
+<div class="container">
+    <h2>{{ isEditMode ? 'Edit Task' : 'Add Task' }}</h2>
+  
+    <form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
+      <div class="mb-3">
+        <label for="title">Title <span class="text-danger">*</span></label>
+        <input 
+          id="title" 
+          type="text" 
+          class="form-control" 
+          formControlName="title" 
+          [ngClass]="{'is-invalid': taskForm.get('title')?.invalid && taskForm.get('title')?.touched}"
+        />
+        <div *ngIf="taskForm.get('title')?.errors?.['required'] && taskForm.get('title')?.touched" class="invalid-feedback">
+          Title is required.
+        </div>
+        <div *ngIf="taskForm.get('title')?.errors?.['maxlength'] && taskForm.get('title')?.touched" class="invalid-feedback">
+          Title cannot exceed 20 characters.
+        </div>
+      </div>
+  
+      <div class="mb-3">
+        <label for="description">Description <span class="text-danger">*</span></label>
+        <textarea 
+          id="description" 
+          class="form-control" 
+          formControlName="description" 
+          [ngClass]="{'is-invalid': taskForm.get('description')?.invalid && taskForm.get('description')?.touched}"
+        ></textarea>
+        <div *ngIf="taskForm.get('description')?.errors?.['required'] && taskForm.get('description')?.touched" class="invalid-feedback">
+          Description is required.
+        </div>
+        <div *ngIf="taskForm.get('description')?.errors?.['maxlength'] && taskForm.get('description')?.touched" class="invalid-feedback">
+          Description cannot exceed 50 characters.
+        </div>
+      </div>
+  
+      <div class="mb-3">
+        <label for="status">Status <span class="text-danger">*</span></label>
+        <select 
+          id="status" 
+          class="form-control" 
+          formControlName="status" 
+          [ngClass]="{'is-invalid': taskForm.get('status')?.invalid && taskForm.get('status')?.touched}"
+        >
+          <option value="">Select a status</option>
+          <option value="Pending">Pending</option>
+          <option value="In Progress">In Progress</option>
+          <option value="Completed">Completed</option>
+        </select>
+        <div *ngIf="taskForm.get('status')?.errors?.['required'] && taskForm.get('status')?.touched" class="invalid-feedback">
+          Status is required.
+        </div>
+      </div>
+  
+      <button type="submit" class="btn btn-success">{{ isEditMode ? 'Update Task' : 'Add Task' }}</button>
+    </form>
+  </div>
+  
